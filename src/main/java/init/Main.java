@@ -1,10 +1,10 @@
 package init;
 
-import controllers.MainController;
+import controllers.GameMainMenu;
 import views.Console;
 
 public class Main {
     public static void main(String[] args) {
-			new MainController(new Console()).run();
+			new GameMainMenu(new Console()).run();
     }
 }

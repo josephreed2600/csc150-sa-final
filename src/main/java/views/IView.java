@@ -1,7 +1,5 @@
 package views;
 
-//import;
-
 public interface IView {
 	public abstract void display(String s);
 

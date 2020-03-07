@@ -17,4 +17,9 @@ public class Rule implements IRule {
 	public CellState apply(CellState cell, CellState[] neighbors) {
 		return rule.apply(cell, neighbors);
 	}
+
+	@Override
+	public String toString() {
+		return description;
+	}
 }

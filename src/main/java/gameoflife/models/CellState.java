@@ -12,8 +12,8 @@ public class CellState {
 	}
 
 	public CellState(CellState cs) {
-		this.name = new cs.name;
-		this.color = new CellColor(cs.color);
+		this.name = cs.name;
+		this.color = cs.color;
 	}
 
 	// TODO if this needs to change, change it

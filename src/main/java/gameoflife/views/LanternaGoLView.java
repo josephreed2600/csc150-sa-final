@@ -15,6 +15,8 @@ public class LanternaGoLView implements IGoLView{
 	private WindowBasedTextGUI tui;
 
 	public void displayBoard(BoardState boardState) {
+		// FIXME
+		System.out.println("Call made to LanternaGoLView::displayBoard");
 	}
 
 	public void modifyBoard(BoardState boardState) {

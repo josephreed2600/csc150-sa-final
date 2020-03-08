@@ -6,9 +6,12 @@ import gameoflife.models.CellState;
 
 public class BoardState {
 	private CellState[][] state;
+	public final int rows, cols;
 
 	public BoardState(int rows, int cols) {
 		state = new CellState[rows][cols];
+		this.rows = rows;
+		this.cols = cols;
 	}
 
 	public CellState[][] getState() { return state; }
@@ -25,6 +28,7 @@ public class BoardState {
 		Function<Integer, Boolean> rowExists = (row_) -> {return row_>0 && row_<state.length;};
 		Function<Integer, Boolean> colExists = (col_) -> {return col_>0 && col_<state[0].length;};
 
+		// just spell it out, it's simpler than loops
 		if(rowExists.apply(row-1) && colExists.apply(col  )) out[0] = getCell(row-1, col  );
 		if(rowExists.apply(row-1) && colExists.apply(col+1)) out[1] = getCell(row-1, col+1);
 		if(rowExists.apply(row  ) && colExists.apply(col+1)) out[2] = getCell(row  , col+1);

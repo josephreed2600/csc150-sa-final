@@ -398,13 +398,13 @@ layer=-1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>692</x>
-      <y>20</y>
-      <w>200</w>
-      <h>292</h>
+      <x>704</x>
+      <y>208</y>
+      <w>188</w>
+      <h>104</h>
     </coordinates>
     <panel_attributes>lt=-</panel_attributes>
-    <additional_attributes>10.0;90.0;10.0;10.0;480.0;10.0;480.0;600.0;410.0;710.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0;450.0;70.0;450.0;130.0;380.0;240.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>

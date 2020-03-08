@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>4</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>600</x>
+      <y>64</y>
+      <w>176</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>BoardState
+--
+- state : CellState[][]
+--
++ BoardState(rows : int, cols : int) &lt;&lt;ctor&gt;&gt;
++ getState() : CellState[][]
++ getCell(row : int, col : int) : CellState
++ setCell(row : int, col : int, state : CellState) : void
++ getCellNeighbors(row : int, col : int) : CellState[]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>564</x>
+      <y>144</y>
+      <w>156</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>CellState
+--
++ name : String &lt;&lt;final&gt;&gt;
++ color : CellColor &lt;&lt;final&gt;&gt;
+--
++ CellState(name : String, colorCode : String) &lt;&lt;ctor&gt;&gt;
++ toString() : String &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1064</x>
+      <y>1116</y>
+      <w>156</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>models
+--
+bg=#0091ff
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>380</x>
+      <y>864</y>
+      <w>84</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>IController
+&lt;&lt;interface&gt;&gt;
+--
+
+--
++ run() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>708</x>
+      <y>312</y>
+      <w>172</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>GameOfLife
+--
+- currentState : BoardState
+- rules : RuleList
+- cellStates : CellStateList
+- view : IGoLView
+--
++ GameOfLIfe(view : IGoLView) &lt;&lt;ctor&gt;&gt;
+_+ applyRules(state : BoardState, rules: Rule) : BoardState_
+- advance() : void
++ run() : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>444</x>
+      <y>372</y>
+      <w>272</w>
+      <h>500</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;1230.0;10.0;10.0;660.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>120</y>
+      <w>176</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>/IRule/
+&lt;&lt;interface&gt;&gt;
+--
+
+--
++ apply(cell : CellState, neighbors : CellState[]) : CellState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>176</y>
+      <w>204</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>RuleList
+--
+
+--
++ apply(cell : CellState, neighbors : CellState[]) : CellState &lt;&lt;override&gt;&gt;
++ toString() : String &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>152</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>880</x>
+      <y>152</y>
+      <w>12</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>716</x>
+      <y>116</y>
+      <w>60</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>130.0;490.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>208</y>
+      <w>48</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;260.0;100.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>800</x>
+      <y>60</y>
+      <w>236</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>Rule
+--
+- rule : BiFunction&lt;CellState, CellState[], CellState&gt; &lt;&lt;final&gt;&gt;
+--
++ Rule(description : String, BiFunction&lt;CellState, CellState[], CellState&gt;) &lt;&lt;ctor&gt;&gt;
++ apply(cell : CellState, neighbors : CellState[]) : CellState &lt;&lt;override&gt;&gt;
++ toString() : String &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>816</x>
+      <y>100</y>
+      <w>12</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>208</y>
+      <w>544</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;200.0;1340.0;200.0;1340.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>660</x>
+      <y>116</y>
+      <w>12</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>204</y>
+      <w>120</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>CellStateList
+--
+
+--
++ findByName(name : String) : CellState</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>644</x>
+      <y>184</y>
+      <w>12</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>216</x>
+      <y>284</y>
+      <w>68</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>java.util.ArrayList</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>280</x>
+      <y>208</y>
+      <w>308</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;200.0;440.0;200.0;440.0;10.0;750.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>688</x>
+      <y>228</y>
+      <w>60</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>130.0;210.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>408</x>
+      <y>76</y>
+      <w>176</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>CellColor
+--
++ name : String &lt;&lt;final&gt;&gt;
++ hex : String &lt;&lt;final&gt;&gt;
++ ansi : String &lt;&lt;final&gt;&gt;
+--
++ CellColor(name : String, hex : String, ansi : String) &lt;&lt;ctor&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>568</x>
+      <y>116</y>
+      <w>12</w>
+      <h>36</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>692</x>
+      <y>1108</y>
+      <w>320</w>
+      <h>236</h>
+    </coordinates>
+    <panel_attributes>controllers
+--
+bg=#91ff00
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>864</x>
+      <y>804</y>
+      <w>760</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>views
+--
+bg=#ff0091
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>948</x>
+      <y>304</y>
+      <w>164</w>
+      <h>92</h>
+    </coordinates>
+    <panel_attributes>IGoLView
+&lt;&lt;interface&gt;&gt;
+--
+
+--
++ displayBoard(boardState : BoardState) : void
++ modifyBoard(boardState : BoardState) : void
++ displayCellStates(cellStates : CellStateList) : void
++ modifyCellStates(cellStates : CellStateList) : void
++ displayRules(rules : RuleList) : void
++ modifyRules(rules : RuleList) : void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>748</x>
+      <y>8</y>
+      <w>372</w>
+      <h>304</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;140.0;10.0;10.0;910.0;10.0;910.0;630.0;840.0;740.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>876</x>
+      <y>336</y>
+      <w>80</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>540</x>
+      <y>228</y>
+      <w>416</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;90.0;10.0;520.0;940.0;520.0;1020.0;360.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>908</x>
+      <y>20</y>
+      <w>200</w>
+      <h>292</h>
+    </coordinates>
+    <panel_attributes>lt=-</panel_attributes>
+    <additional_attributes>10.0;100.0;10.0;10.0;480.0;10.0;480.0;600.0;410.0;710.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>888</x>
+      <y>860</y>
+      <w>308</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>IView
+&lt;&lt;interface&gt;&gt;
+--
+
+--
++ promptForString(prompt : String) : String
++ promptForInt(prompt : String) : int
++ promptForBool(prompt : String) : boolean
++ promptForInts(prompt : String) : ArrayList&lt;Integer&gt;
+
++ promptForString(prompt : String, validator : Function&lt;String, Boolean&gt;) : String
++ promptForInt(prompt : String, validator : Function&lt;Integer, Boolean&gt;) : boolean
++ promptForInts(prompt : String, validator : Function&lt;ArrayList&lt;Integer&gt;, Boolean&gt;) : ArrayList&lt;Integer&gt;
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>1120</x>
+      <y>284</y>
+      <w>152</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Note
+--
+//IGoLView seems to require some amount of logic
+//and understanding of the models, with
+//creating/deleting rules and cell states. I feel
+//like this category of responsibility might belong
+//in a controller, but it seems like the
+//implementation of the activities listed here is
+//rather dependent on the method of display and
+//input. In other words, I see coupling of logic
+//and IO here, but I think it is appropriate---if we
+//were to write another view, it would need to
+//handle these actions differently.
+//
+IGoLView contains some nontrivial logic and
+understanding of models, which feels like a red
+flag at first---should this stuff be in a controller?
+I think it makes sense that a view for this system
+should be able to manipulate these things. The
+view we intend to write uses a terminal interface,
+which allows for rich interactions with the user.
+If we were to write another view for the console,
+or for a GUI, each would need to handle these
+activities differently. So, while there appears to
+be coupling of the view with the models, I suspect
+it is "healthy coupling".
+
+Another option is moving more of the logic to the
+GoL controller and having a method there that
+handles signals that the view forwards to it.
+These signals would be listed in an enum, although
+we might have to create a data type that contains
+more information, such as coordinates, colors, and
+names. This may make more sense for the terminal
+view, but other I/O formats don't really support
+signals in a similar way---the console, for example.
+While this approach is doable, I'm not sure it really
+improves the MVC-ness of the project, and it would
+be more work.</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>948</x>
+      <y>488</y>
+      <w>352</w>
+      <h>148</h>
+    </coordinates>
+    <panel_attributes>LanternaGoLView
+--
+- term : Terminal
+- screen : Screen
+- tui : WindowBasedTextGUI
+--
++ LanternaGoLView() &lt;&lt;ctor&gt;&gt;
+
++ displayBoard(boardState : BoardState) : void &lt;&lt;override&gt;&gt;
++ modifyBoard(boardState : BoardState) : void &lt;&lt;override&gt;&gt;
++ displayCellStates(cellStates : CellStateList) : void &lt;&lt;override&gt;&gt;
++ modifyCellStates(cellStates : CellStateList) : void &lt;&lt;override&gt;&gt;
++ displayRules(rules : RuleList) : void &lt;&lt;override&gt;&gt;
++ modifyRules(rules : RuleList) : void &lt;&lt;override&gt;&gt;
+ 
++ promptForString(prompt : String) : String &lt;&lt;override&gt;&gt;
++ promptForInt(prompt : String) : int &lt;&lt;override&gt;&gt;
++ promptForBool(prompt : String) : boolean &lt;&lt;override&gt;&gt;
++ promptForInts(prompt : String) : ArrayList&lt;Integer&gt; &lt;&lt;override&gt;&gt;
+
+// Functions return Strings to report error conditions, or null
++ promptForString(prompt : String, validator : Function&lt;String, String&gt;) : String &lt;&lt;override&gt;&gt;
++ promptForInt(prompt : String, validator : Function&lt;Integer, String&gt;) : boolean &lt;&lt;override&gt;&gt;
++ promptForInts(prompt : String, validator : Function&lt;ArrayList&lt;Integer&gt;, String&gt;) : ArrayList&lt;Integer&gt; &lt;&lt;override&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1016</x>
+      <y>392</y>
+      <w>12</w>
+      <h>104</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1000</x>
+      <y>632</y>
+      <w>12</w>
+      <h>236</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;570.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1296</x>
+      <y>568</y>
+      <w>136</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;320.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1424</x>
+      <y>564</y>
+      <w>88</w>
+      <h>20</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;library&gt;&gt;
+com.googlecode.lanterna</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>512</x>
+      <y>856</y>
+      <w>176</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>GameMainMenu
+--
+- view : IView
+--
++ GameMainMenu(view : IView) &lt;&lt;ctor&gt;&gt;
++ run(): void
++ mainMenu() : int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>308</x>
+      <y>0</y>
+      <w>1068</w>
+      <h>784</h>
+    </coordinates>
+    <panel_attributes>gameoflife
+--
+bg=#eeeeee
+layer=-2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>388</x>
+      <y>28</y>
+      <w>680</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>models
+--
+bg=#0091ff
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>268</x>
+      <y>804</y>
+      <w>440</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>controllers
+--
+bg=#91ff00</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>632</x>
+      <y>1060</y>
+      <w>768</w>
+      <h>352</h>
+    </coordinates>
+    <panel_attributes>gofish
+--
+bg=#cccccc
+layer=-2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>736</x>
+      <y>1152</y>
+      <w>196</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>GoFish
+--
+- view : IView
++ deck : ArrayList&lt;Rank&gt;
++ playerHand : ArrayList&lt;Rank&gt;
++ opponentHand : ArrayList&lt;Rank&gt;
++ countPoints : ArrayList&lt;Rank&gt;
++ playerPoints : int
++ opponentPoints : int
++ rng : Random
+//-inputReader BufferedReader
+--
++ GoFish(view : IView) &lt;&lt;ctor&gt;&gt;
++ run() : void
++ initialize() : void
++ drawForPlayer() : void
++ drawForOppoent() : void
++ gameStart() : void
+//+promptForString(prompt String) String
+//
++ checkForPoint(person : ArrayList&lt;Rank&gt;, rank : Rank) : boolean
++ checkForWin(i : int) : boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>692</x>
+      <y>296</y>
+      <w>204</w>
+      <h>116</h>
+    </coordinates>
+    <panel_attributes>controllers
+--
+bg=#91ff00</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1100</x>
+      <y>1164</y>
+      <w>72</w>
+      <h>124</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Rank
+--
+TWO,
+THREE,
+FOUR,
+FIVE,
+SIX,
+SEVEN,
+EIGHT,
+NINE,
+TEN,
+JACK,
+QUEEN,
+KING,
+ROUXLS_KAARD,
+JOKER</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>936</x>
+      <y>272</y>
+      <w>384</w>
+      <h>452</h>
+    </coordinates>
+    <panel_attributes>views
+--
+bg=#ff0091
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1240</x>
+      <y>860</y>
+      <w>308</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>ConsoleView
+--
+_- cout : PrintStream_
+_- cin : BufferedReader_
+--
++ ConsoleView() &lt;&lt;ctor&gt;&gt;
+
++ promptForString(prompt : String) : String
++ promptForInt(prompt : String) : int
++ promptForBool(prompt : String) : boolean
++ promptForInts(prompt : String) : ArrayList&lt;Integer&gt;
+
++ promptForString(prompt : String, validator : Function&lt;String, Boolean&gt;) : String
++ promptForInt(prompt : String, validator : Function&lt;Integer, Boolean&gt;) : boolean
++ promptForInts(prompt : String, validator : Function&lt;ArrayList&lt;Integer&gt;, Boolean&gt;) : ArrayList&lt;Integer&gt;
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1192</x>
+      <y>904</y>
+      <w>56</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;120.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>908</x>
+      <y>944</y>
+      <w>12</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;520.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>428</x>
+      <y>896</y>
+      <w>316</w>
+      <h>284</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;690.0;770.0;690.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>460</x>
+      <y>880</y>
+      <w>60</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;10.0;130.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>720</x>
+      <y>936</y>
+      <w>120</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>init
+--
+bg=#9191ff
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>728</x>
+      <y>956</y>
+      <w>104</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Main
+--
+
+--
+_+ main(argv : String[]) : void_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>684</x>
+      <y>880</y>
+      <w>212</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;510.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>632</x>
+      <y>908</y>
+      <w>104</w>
+      <h>68</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;240.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>592</x>
+      <y>908</y>
+      <w>196</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>470.0;610.0;470.0;300.0;10.0;300.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>620</x>
+      <y>396</y>
+      <w>140</w>
+      <h>468</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>330.0;10.0;330.0;440.0;10.0;440.0;10.0;1150.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>928</x>
+      <y>1236</y>
+      <w>180</w>
+      <h>12</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;430.0;10.0</additional_attributes>
+  </element>
+</diagram>

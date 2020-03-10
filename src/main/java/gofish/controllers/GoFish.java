@@ -1,6 +1,8 @@
 package gofish.controllers;
 
 import enums.Ranks;
+import views.IView;
+import controllers.IController;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,131 +10,51 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
-import controllers.IController;
-import views.IView;
-
 public class GoFish implements IController {
-    static ArrayList<Ranks> deck = new ArrayList<>();
-    static ArrayList<Ranks> playerHand = new ArrayList<>();
-    static ArrayList<Ranks> opponentHand = new ArrayList<>();
-    static ArrayList<Ranks> countHand = new ArrayList<>();
+    ArrayList<Ranks> deck = new ArrayList<>();
+    ArrayList<Ranks> playerHand = new ArrayList<>();
+    ArrayList<Ranks> opponentHand = new ArrayList<>();
+    ArrayList<Ranks> countHand = new ArrayList<>();
     int playerPoints = 0;
     int opponentPoints = 0;
-    static int susLevel = 0;
-    static int squashyCount = 0;
-    static int takeStreak = 0;
+    int susLevel = 0;
+    int squashyCount = 0;
+    int takeStreak = 0;
     static Random rng = new Random();
     private static BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 
-		private IView view;
-
-		public GoFish(IView view) {
-			this.view = view;
-		}
-
-    public void run(){
-        boolean isInvalid = true;
-        System.out.println("Welcome to Go Fish!");
-        gameStart();
-        do{
-            String shoop = promptForString("Try Again?\nY/N");
-            if(shoop.equals("Yes") || shoop.equals("Y") || shoop.equals("Ye")){
-                deck.removeAll(deck);
-                playerHand.removeAll(playerHand);
-                opponentHand.removeAll(opponentHand);
-                playerPoints = 0;
-                opponentPoints = 0;
-                squashyCount = 0;
-                susLevel = 0;
-                gameStart();
-            } else if(shoop.equals("NO") || shoop.equals("N") || shoop.equals("Nah")){
-                isInvalid = false;
-            }
-            else {
-                System.out.println("Please enter Y or N");
-
-            }
-        }while (isInvalid);
+    private IView view;
+    public GoFish(IView view) {
+        this.view = view;
     }
 
-    public static void Initialize(){
+    public  void Initialize(){
         deck.add(Ranks.ROUXLS_KAARD);
-        deck.add(Ranks.JOKER);
-        deck.add(Ranks.TWO);
-        deck.add(Ranks.THREE);
-        deck.add(Ranks.FOUR);
-        deck.add(Ranks.FIVE);
-        deck.add(Ranks.SIX);
-        deck.add(Ranks.SEVEN);
-        deck.add(Ranks.EIGHT);
-        deck.add(Ranks.NINE);
-        deck.add(Ranks.TEN);
-        deck.add(Ranks.JACK);
-        deck.add(Ranks.QUEEN);
-        deck.add(Ranks.KING);
-        deck.add(Ranks.ACE);
 
-        deck.add(Ranks.TWO);
-        deck.add(Ranks.THREE);
-        deck.add(Ranks.FOUR);
-        deck.add(Ranks.FIVE);
-        deck.add(Ranks.SIX);
-        deck.add(Ranks.SEVEN);
-        deck.add(Ranks.EIGHT);
-        deck.add(Ranks.NINE);
-        deck.add(Ranks.TEN);
-        deck.add(Ranks.JACK);
-        deck.add(Ranks.QUEEN);
-        deck.add(Ranks.KING);
-        deck.add(Ranks.ACE);
-
-        deck.add(Ranks.TWO);
-        deck.add(Ranks.THREE);
-        deck.add(Ranks.FOUR);
-        deck.add(Ranks.FIVE);
-        deck.add(Ranks.SIX);
-        deck.add(Ranks.SEVEN);
-        deck.add(Ranks.EIGHT);
-        deck.add(Ranks.NINE);
-        deck.add(Ranks.TEN);
-        deck.add(Ranks.JACK);
-        deck.add(Ranks.QUEEN);
-        deck.add(Ranks.KING);
-        deck.add(Ranks.ACE);
-
-        deck.add(Ranks.TWO);
-        deck.add(Ranks.THREE);
-        deck.add(Ranks.FOUR);
-        deck.add(Ranks.FIVE);
-        deck.add(Ranks.SIX);
-        deck.add(Ranks.SEVEN);
-        deck.add(Ranks.EIGHT);
-        deck.add(Ranks.NINE);
-        deck.add(Ranks.TEN);
-        deck.add(Ranks.JACK);
-        deck.add(Ranks.QUEEN);
-        deck.add(Ranks.KING);
-        deck.add(Ranks.ACE);
-
-
-        drawForPlayer();
-        drawForOpponent();
-        drawForPlayer();
-        drawForOpponent();
-        drawForPlayer();
-        drawForOpponent();
-        drawForPlayer();
-        drawForOpponent();
-        drawForPlayer();
-        drawForOpponent();
-        drawForPlayer();
-        drawForOpponent();
-        drawForPlayer();
-        drawForOpponent();
+        for(int i = 0; i <4; i++){
+            deck.add(Ranks.JOKER);
+            deck.add(Ranks.TWO);
+            deck.add(Ranks.THREE);
+            deck.add(Ranks.FOUR);
+            deck.add(Ranks.FIVE);
+            deck.add(Ranks.SIX);
+            deck.add(Ranks.SEVEN);
+            deck.add(Ranks.EIGHT);
+            deck.add(Ranks.NINE);
+            deck.add(Ranks.TEN);
+            deck.add(Ranks.JACK);
+            deck.add(Ranks.QUEEN);
+            deck.add(Ranks.KING);
+            deck.add(Ranks.ACE);
+        }
+        for(int i = 0; i <7; i++){
+            drawForPlayer();
+            drawForOpponent();
+        }
 
     }
 
-    public static void drawForPlayer(){
+    public  void drawForPlayer(){
         int newCard = rng.nextInt(deck.size() - 1);
         if(deck.size() > 2) {
             if (newCard == 1) {
@@ -150,7 +72,7 @@ public class GoFish implements IController {
         }
     }
 
-    public static void drawForOpponent(){
+    public  void drawForOpponent(){
         int newCard = rng.nextInt(deck.size() - 1);
         if(deck.size() > 2) {
             if (newCard == 1) {
@@ -168,7 +90,7 @@ public class GoFish implements IController {
         }
     }
 
-    public void gameStart(){
+    public  void gameLogic(){
         int totalPoints = playerPoints + opponentPoints;
         Initialize();
         boolean streakTextUsed = false;
@@ -180,13 +102,12 @@ public class GoFish implements IController {
                 System.out.println("Praise be unto him.");
                 System.out.println("His Hand: " + opponentHand);
             }
-            String bup = promptForString("Please ask for a card.");
+            String bup = view.promptForString("Please ask for a card.");
 
             if(bup.equals("SQUASHY")){
                 System.out.println("You tell your opponent there is something really cool behind him.\n");
-                susLevel++;
-                susLevel++;
-                susLevel++;
+                susLevel+=3;
+
                 if(squashyCount == 1){
                     System.out.println("He immediately calls you out on your antics.\nYeah there was no way he'd let you get away with divine intervention a second time.\nYou have been disqualified.");
                     playerPoints = 0;
@@ -321,7 +242,7 @@ public class GoFish implements IController {
                 }
                 else {
                     susLevel++;
-                    String goop = promptForString("What do you want to check for?");
+                    String goop = view.promptForString("What do you want to check for?");
                     if(opponentHand.toString().contains(goop.toUpperCase())){
                         System.out.println("Your opponent's hand does contain at least one " + goop.toLowerCase() + ".");
                     } else {
@@ -399,45 +320,45 @@ public class GoFish implements IController {
                     }
 
                     if (checkForPoint(playerHand, Ranks.TWO)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.THREE)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.FOUR)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.FIVE)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.SIX)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.SEVEN)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.EIGHT)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.NINE)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.TEN)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.JACK)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.QUEEN)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.KING)) {
-                            playerPoints++;
-                            i++;
-                        } else if (checkForPoint(playerHand, Ranks.ACE)) {
-                            playerPoints++;
-                            i++;
-                        }
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.THREE)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.FOUR)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.FIVE)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.SIX)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.SEVEN)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.EIGHT)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.NINE)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.TEN)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.JACK)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.QUEEN)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.KING)) {
+                        playerPoints++;
+                        i++;
+                    } else if (checkForPoint(playerHand, Ranks.ACE)) {
+                        playerPoints++;
+                        i++;
+                    }
 
 
                 }while (opponentHand.toString().contains(bup.toUpperCase()));
@@ -538,71 +459,18 @@ public class GoFish implements IController {
                 }
                 System.out.println(playerHand);
             }
-                for(int j = 0; j < 13;) {
-                    int randNum = rng.nextInt(opponentHand.size());
-                    String card = opponentHand.get(randNum).toString();
+            for(int j = 0; j < 13;) {
+                int randNum = rng.nextInt(opponentHand.size());
+                String card = opponentHand.get(randNum).toString();
 
-                    if (playerHand.toString().contains(card)) {
-                        System.out.println("Your opponent asks for " + card + "S, so you hand them over.");
-                        do {
-                            opponentHand.add(Ranks.valueOf(card));
-                            playerHand.remove(Ranks.valueOf(card));
-                            if(playerHand.size() == 0){
-                                drawForPlayer();
-                            }
-                            if (checkForPoint(opponentHand, Ranks.TWO)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.THREE)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.FOUR)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.SIX)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.NINE)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.TEN)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.JACK)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.KING)) {
-                                    opponentPoints++;
-                                    i++;
-                                } else if (checkForPoint(opponentHand, Ranks.ACE)) {
-                                    opponentPoints++;
-                                    i++;
-                                }
-
-                        }while (playerHand.toString().contains(card));
-                        if(checkForWin(i)){
-                            break;
+                if (playerHand.toString().contains(card)) {
+                    System.out.println("Your opponent asks for " + card + "S, so you hand them over.");
+                    do {
+                        opponentHand.add(Ranks.valueOf(card));
+                        playerHand.remove(Ranks.valueOf(card));
+                        if(playerHand.size() == 0){
+                            drawForPlayer();
                         }
-                        System.out.println(playerHand);
-                        continue;
-                    }
-
-
-                    if (!playerHand.toString().contains(card)) {
-                        System.out.println("Your opponent asks for " + card + "S, you say \"Go Fish!\", and he reaches to draw a card");
-                        drawForOpponent();
                         if (checkForPoint(opponentHand, Ranks.TWO)) {
                             opponentPoints++;
                             i++;
@@ -610,97 +478,133 @@ public class GoFish implements IController {
                             opponentPoints++;
                             i++;
                         } else if (checkForPoint(opponentHand, Ranks.FOUR)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.SIX)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.NINE)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.TEN)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.JACK)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.KING)) {
-                                opponentPoints++;
-                                i++;
-                            } else if (checkForPoint(opponentHand, Ranks.ACE)) {
-                                opponentPoints++;
-                                i++;
-                            }
-                        if(checkForWin(i)){
-                            break;
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.SIX)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.NINE)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.TEN)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.JACK)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.KING)) {
+                            opponentPoints++;
+                            i++;
+                        } else if (checkForPoint(opponentHand, Ranks.ACE)) {
+                            opponentPoints++;
+                            i++;
                         }
+
+                    }while (playerHand.toString().contains(card));
+                    if(checkForWin(i)){
                         break;
                     }
+                    System.out.println(playerHand);
+                    continue;
                 }
+
+
+                if (!playerHand.toString().contains(card)) {
+                    System.out.println("Your opponent asks for " + card + "S, you say \"Go Fish!\", and he reaches to draw a card");
+                    drawForOpponent();
+                    if (checkForPoint(opponentHand, Ranks.TWO)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.THREE)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.FOUR)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.SIX)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.NINE)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.TEN)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.JACK)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.KING)) {
+                        opponentPoints++;
+                        i++;
+                    } else if (checkForPoint(opponentHand, Ranks.ACE)) {
+                        opponentPoints++;
+                        i++;
+                    }
+                    if(checkForWin(i)){
+                        break;
+                    }
+                    break;
+                }
+            }
         }
 
         System.out.println("You: " + playerPoints);
         System.out.println("Them: " + opponentPoints);
     }
 
-    public static String promptForString(String prompt){
-        String input = "";
-
-        System.out.println(prompt);
-        try {
-            input = inputReader.readLine();
-
-
-
-        } catch (NumberFormatException nfe) {
-            System.out.println("your input was not valid.  try again");
-        } catch (IOException ioe) {
-            System.out.println("Whoa! Something went WAY wrong with your input.  let's try again.");
-        }
-        return input;
-    }
-
-    public static boolean checkForPoint(ArrayList<Ranks> person, Ranks rank){
+    public  boolean checkForPoint(ArrayList<Ranks> person, Ranks rank){
         boolean success = false;
         int i = 0;
 
-            if(person.contains(rank)){
-                do {
-                    person.remove(rank);
-                    countHand.add(rank);
-                    i++;
-                }while (person.contains(rank));
-                if(i == 4){
-                    countHand.removeAll(countHand);
-                    if(playerHand.size() == 0){
-                        drawForPlayer();
-                    }
-                    if(opponentHand.size() == 0){
-                        drawForOpponent();
-                    }
-                    success = true;
-                }else {
-                    person.addAll(countHand);
-                    countHand.removeAll(countHand);
-                    i = 0;
+        if(person.contains(rank)){
+            do {
+                person.remove(rank);
+                countHand.add(rank);
+                i++;
+            }while (person.contains(rank));
+            if(i == 4){
+                countHand.removeAll(countHand);
+                if(playerHand.size() == 0){
+                    drawForPlayer();
                 }
+                if(opponentHand.size() == 0){
+                    drawForOpponent();
+                }
+                success = true;
+            }else {
+                person.addAll(countHand);
+                countHand.removeAll(countHand);
+                i = 0;
             }
+        }
         return success;
     }
 
-    public boolean checkForWin(int i){
+    public  boolean checkForWin(int i){
         boolean win = false;
         if (i == 13) {
             System.out.println("GAME!");
@@ -712,6 +616,25 @@ public class GoFish implements IController {
             win = true;
         }
         return win;
+    }
+
+    public void run(){
+        boolean isInvalid = true;
+        System.out.println("Welcome to Go Fish!");
+        gameLogic();
+
+            boolean gameRestart = view.promptForBoolean("Try Again?\nY/N");
+            if(gameRestart) {
+                deck.removeAll(deck);
+                playerHand.removeAll(playerHand);
+                opponentHand.removeAll(opponentHand);
+                playerPoints = 0;
+                opponentPoints = 0;
+                squashyCount = 0;
+                susLevel = 0;
+                gameLogic();
+            }
+
     }
 
 }

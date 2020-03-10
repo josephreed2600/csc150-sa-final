@@ -20,4 +20,7 @@ public class CellState {
 	public String toString() {
 		return name;
 	}
+
+	public boolean equals(CellState other) { return this.name.equals(other.name); }
+	public boolean equals(String name) { return this.name.equals(name); }
 }

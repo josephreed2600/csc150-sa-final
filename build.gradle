@@ -46,5 +46,9 @@ jar {
         attributes 'Main-Class': 'init.Main'
     }
     baseName = 'all-in-one-jar'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+ //   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	  from {
+			configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+		}
+
 }

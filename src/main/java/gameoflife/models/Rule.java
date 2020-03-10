@@ -15,11 +15,23 @@ public class Rule implements IRule {
 
 	@Override
 	public CellState apply(CellState cell, CellState[] neighbors) {
-		return rule.apply(new CellState(cell), neighbors);
+		return rule.apply(cell, neighbors);
 	}
 
 	@Override
 	public String toString() {
 		return description;
+	}
+
+	// common functionality when writing rules
+	public static int countState(CellState[] cells, CellState target) {
+		int count = 0;
+		for(CellState cell : cells) if(cell != null && cell.equals(target)) count++;
+		return count;
+	}
+	public static int countState(CellState[] cells, String target) {
+		int count = 0;
+		for(CellState cell : cells) if(cell != null && cell.equals(target)) count++;
+		return count;
 	}
 }

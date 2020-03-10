@@ -25,7 +25,11 @@ public class BoardState {
 
 	public CellState[][] getState() { return state; }
 
-	public CellState getCell(int row, int col) { return state[row][col]; }
+	public CellState getCell(int row, int col) {
+		if(rowExists(row) && colExists(col))
+		return state[row][col];
+		return null;
+	}
 
 	public void setCell(int row, int col, CellState state) { this.state[row][col] = state; }
 

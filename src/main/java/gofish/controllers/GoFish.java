@@ -1,4 +1,4 @@
-package controllers;
+package gofish.controllers;
 
 import enums.Ranks;
 
@@ -8,7 +8,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GoFish {
+import controllers.IController;
+import views.IView;
+
+public class GoFish implements IController {
     static ArrayList<Ranks> deck = new ArrayList<>();
     static ArrayList<Ranks> playerHand = new ArrayList<>();
     static ArrayList<Ranks> opponentHand = new ArrayList<>();
@@ -20,6 +23,12 @@ public class GoFish {
     static int takeStreak = 0;
     static Random rng = new Random();
     private static BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+
+		private IView view;
+
+		public GoFish(IView view) {
+			this.view = view;
+		}
 
     public void run(){
         boolean isInvalid = true;

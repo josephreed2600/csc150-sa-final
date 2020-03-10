@@ -19,8 +19,10 @@ public class GameOfLife {
 
 	public GameOfLife(IGoLView view) {
 		this.view = view;
+		this.view.setGame(this);
 
 		// FIXME add ansi colors
+		// or don't
 		availableColors.add(new CellColor("black", "#000000", ""));
 		availableColors.add(new CellColor("white", "#ffffff", ""));
 
@@ -109,6 +111,7 @@ public class GameOfLife {
 	}
 
 	private void onLoop() {
+		view.handleInput();
 		if(!paused) advance();
 		view.displayBoard(currentState);
 	}
@@ -139,7 +142,6 @@ public class GameOfLife {
 
 	public void run() {
 		view.initialize();
-		// FIXME magick numbers
 		currentState = new BoardState(view.getHeight(), view.getWidth(), cellStates.findByName("dead"));
 		applyTestPattern();
 		try {
@@ -154,6 +156,7 @@ public class GameOfLife {
 		view.shutdown();
 	}
 
+	public void togglePause() { paused = !paused; }
 	public void pause() { paused = true; }
 	public void play() { paused = false; }
 	public void quit() { quit = true; }

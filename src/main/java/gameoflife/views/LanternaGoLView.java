@@ -5,22 +5,46 @@ import java.io.*;
 import gameoflife.models.BoardState;
 import gameoflife.models.CellStateList;
 import gameoflife.models.RuleList;
+import gameoflife.controllers.GameOfLife;
 
 import com.googlecode.lanterna.terminal.*;
 import com.googlecode.lanterna.screen.*;
 import com.googlecode.lanterna.gui2.*;
-import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.*;
+import com.googlecode.lanterna.input.*;
 
 public class LanternaGoLView implements IGoLView{
-	
+
 	private Terminal term;
 	private Screen screen;
 	private WindowBasedTextGUI tui;
+	private GameOfLife gol;
 
 	public LanternaGoLView() {
 		try {
-		term = new DefaultTerminalFactory().createTerminal();
-		screen = new TerminalScreen(term);
+			term = new DefaultTerminalFactory().createTerminal();
+			screen = new TerminalScreen(term);
+		} catch(IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
+	}
+
+	public void setGame(GameOfLife gol) {
+		this.gol = gol;
+	}
+
+	public void handleInput() {
+		try {
+			KeyStroke input = term.pollInput();
+			if(input != null)
+				switch(input.getKeyType()) {
+					case KeyType.Character:
+						switch(input.getCharacter()) {
+							case 'q': gol.quit(); break;
+							case ' ': gol.togglePause();
+						}
+						break;
+				}
 		} catch(IOException ioe) {
 			throw new RuntimeException(ioe);
 		}

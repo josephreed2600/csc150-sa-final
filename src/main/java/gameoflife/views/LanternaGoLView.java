@@ -38,7 +38,7 @@ public class LanternaGoLView implements IGoLView{
 			KeyStroke input = term.pollInput();
 			if(input != null)
 				switch(input.getKeyType()) {
-					case KeyType.Character:
+					case Character:
 						switch(input.getCharacter()) {
 							case 'q': gol.quit(); break;
 							case ' ': gol.togglePause();

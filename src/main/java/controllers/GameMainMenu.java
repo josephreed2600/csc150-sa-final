@@ -6,10 +6,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import controllers.IController;
-import views.IView;
+import views.*;
 
 import gameoflife.controllers.*;
 import gameoflife.views.*;
+import gofish.controllers.*;
 
 // TODO refactor to use IView
 public class GameMainMenu implements IController {
@@ -51,6 +52,7 @@ public class GameMainMenu implements IController {
 
 				case 2:
 					//Go Fish goes here
+					new GoFish(new Console()).run();
 					break;
 
 				default:

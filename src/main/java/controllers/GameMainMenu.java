@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import controllers.IController;
 import views.IView;
 
+import gameoflife.controllers.*;
+import gameoflife.views.*;
+
 // TODO refactor to use IView
 public class GameMainMenu implements IController {
 	private IView view;
@@ -43,9 +46,12 @@ public class GameMainMenu implements IController {
 					break;
 				case 1:
 					//Game of Life goes here
+					new GameOfLife(new LanternaGoLView()).run();
+					break;
 
 				case 2:
 					//Go Fish goes here
+					break;
 
 				default:
 					System.out.println("Not A Valid Choice");

@@ -5,6 +5,10 @@ import gameoflife.models.CellStateList;
 import gameoflife.models.RuleList;
 
 public interface IGoLView {
+	public void initialize();
+	public void shutdown();
+	public int getWidth();
+	public int getHeight();
 	public void displayBoard(BoardState boardState);
 	public void modifyBoard(BoardState boardState);
 	public void displayCellStates(CellStateList cellStates);

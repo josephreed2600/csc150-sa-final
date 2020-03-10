@@ -19,7 +19,6 @@ public class GoFish implements IController {
   int squashyCount = 0;
   int takeStreak = 0;
   static Random rng = new Random();
-  private static BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 
   private IView view;
 
@@ -63,7 +62,7 @@ public class GoFish implements IController {
       }
     }
     if (deck.size() == 2) {
-      System.out.println("But there are no more fish in the pond.");
+      view.display("But there are no more fish in the pond.\n");
     } else {
       playerHand.add(deck.get(newCard));
       deck.remove(newCard);
@@ -81,7 +80,7 @@ public class GoFish implements IController {
       }
     }
     if (deck.size() == 2) {
-      System.out.println("Not even a nibble.");
+      view.display("Not even a nibble.\n");
     } else {
       opponentHand.add(deck.get(newCard));
       deck.remove(newCard);
@@ -94,27 +93,28 @@ public class GoFish implements IController {
     boolean streakTextUsed = false;
     for (int i = totalPoints; i < 13; ) {
       int failChance = rng.nextInt(10);
-      System.out.println(
+      view.display(
           "\nDeck: "
               + (deck.size() - 2)
               + " cards left\nYou: "
               + playerPoints
               + "\nThem: "
-              + opponentPoints);
-      System.out.println(playerHand);
+              + opponentPoints
+							+ "\n");
+      view.display(playerHand+"\n");
       if (squashyCount == 1) {
-        System.out.println("Praise be unto him.");
-        System.out.println("His Hand: " + opponentHand);
+        view.display("Praise be unto him.\n");
+        view.display("His Hand: " + opponentHand + "\n");
       }
       String bup = view.promptForString("Please ask for a card.");
 
       if (bup.equals("SQUASHY")) {
-        System.out.println("You tell your opponent there is something really cool behind him.\n");
+        view.display("You tell your opponent there is something really cool behind him.\n");
         susLevel += 3;
 
         if (squashyCount == 1) {
-          System.out.println(
-              "He immediately calls you out on your antics.\nYeah there was no way he'd let you get away with divine intervention a second time.\nYou have been disqualified.");
+          view.display(
+              "He immediately calls you out on your antics.\nYeah there was no way he'd let you get away with divine intervention a second time.\nYou have been disqualified.\n");
           playerPoints = 0;
           opponentPoints = 13;
           i = 13;
@@ -123,15 +123,15 @@ public class GoFish implements IController {
           }
           break;
         }
-        System.out.println(
+        view.display(
             "While he's not looking you perform a ritual consisting of various chants, dances, and hand gestures.\n");
         if (susLevel == 3 && failChance > 4
             || susLevel == 4 && failChance > 3
             || susLevel == 5 && failChance > 2
             || susLevel == 6 && failChance > 1
             || susLevel == 7) {
-          System.out.println(
-              "But your opponent turned back around before you could finish.\nAs a result, you have been disqualified.");
+          view.display(
+              "But your opponent turned back around before you could finish.\nAs a result, you have been disqualified.\n");
           playerPoints = 0;
           opponentPoints = 13;
           i = 13;
@@ -141,12 +141,12 @@ public class GoFish implements IController {
           break;
         } else {
           squashyCount++;
-          System.out.println(
+          view.display(
               "You finish the ritual and clean up the candles and chalk before he notices\n");
 
           if (susLevel >= 3) {
-            System.out.println(
-                "That was a pretty risky move, you're lucky your opponent is a bit of an idiot.\nMaybe you shouldn't try asking for help from divine beings again, or cheating for that matter.\nJust saying.");
+            view.display(
+                "That was a pretty risky move, you're lucky your opponent is a bit of an idiot.\nMaybe you shouldn't try asking for help from divine beings again, or cheating for that matter.\nJust saying.\n");
           }
           continue;
         }
@@ -159,8 +159,8 @@ public class GoFish implements IController {
             || susLevel == 7 && failChance > 2
             || susLevel == 8 && failChance > 1
             || susLevel == 9) {
-          System.out.println(
-              "Your opponent has become aware of your shenanigans, and you are disqualified");
+          view.display(
+              "Your opponent has become aware of your shenanigans, and you are disqualified\n");
           playerPoints = 0;
           opponentPoints = 13;
           i = 13;
@@ -170,11 +170,11 @@ public class GoFish implements IController {
           break;
         } else {
           susLevel++;
-          System.out.println("While your opponent isn't looking, you take another card.");
+          view.display("While your opponent isn't looking, you take another card.\n");
           drawForPlayer();
           if (susLevel == 3) {
-            System.out.println(
-                "You're starting to look pretty sus, might not want to try that again.");
+            view.display(
+                "You're starting to look pretty sus, might not want to try that again.\n");
           }
           continue;
         }
@@ -188,8 +188,8 @@ public class GoFish implements IController {
             || susLevel == 7 && failChance > 2
             || susLevel == 8 && failChance > 1
             || susLevel == 9) {
-          System.out.println(
-              "Your opponent has become aware of your shenanigans, and you are disqualified");
+          view.display(
+              "Your opponent has become aware of your shenanigans, and you are disqualified\n");
           playerPoints = 0;
           opponentPoints = 13;
           i = 13;
@@ -202,10 +202,10 @@ public class GoFish implements IController {
           int randNum = rng.nextInt(opponentHand.size());
           String card = opponentHand.get(randNum).toString();
           susLevel++;
-          System.out.println(
+          view.display(
               "While your opponent is taking a bathroom break you take one of their cards.  it's a "
                   + card
-                  + "!");
+                  + "!\n");
           opponentHand.remove(Ranks.valueOf(card));
           playerHand.add(Ranks.valueOf(card));
           if (checkForPoint(playerHand, Ranks.TWO)) {
@@ -252,8 +252,8 @@ public class GoFish implements IController {
             break;
           }
           if (susLevel == 3) {
-            System.out.println(
-                "You're starting to look pretty sus, might not want to try that again.");
+            view.display(
+                "You're starting to look pretty sus, might not want to try that again.\n");
           }
           continue;
         }
@@ -266,8 +266,8 @@ public class GoFish implements IController {
             || susLevel == 7 && failChance > 2
             || susLevel == 8 && failChance > 1
             || susLevel == 9) {
-          System.out.println(
-              "Your opponent has become aware of your shenanigans, and you are disqualified");
+          view.display(
+              "Your opponent has become aware of your shenanigans, and you are disqualified\n");
           playerPoints = 0;
           opponentPoints = 13;
           i = 13;
@@ -279,14 +279,14 @@ public class GoFish implements IController {
           susLevel++;
           String goop = view.promptForString("What do you want to check for?");
           if (opponentHand.toString().contains(goop.toUpperCase())) {
-            System.out.println(
-                "Your opponent's hand does contain at least one " + goop.toLowerCase() + ".");
+            view.display(
+                "Your opponent's hand does contain at least one " + goop.toLowerCase() + ".\n");
           } else {
-            System.out.println("There does not seem to be any of those in your opponent's hand");
+            view.display("There does not seem to be any of those in your opponent's hand\n");
           }
           if (susLevel == 3) {
-            System.out.println(
-                "You're starting to look pretty sus, might not want to try that again.");
+            view.display(
+                "You're starting to look pretty sus, might not want to try that again.\n");
           }
           continue;
         }
@@ -307,19 +307,19 @@ public class GoFish implements IController {
               && !bup.toUpperCase().equals(Ranks.QUEEN.toString())
               && !bup.toUpperCase().equals(Ranks.KING.toString())
               && !bup.toUpperCase().equals(Ranks.ACE.toString())) {
-        System.out.println("You can only ask for cards you have!");
+        view.display("You can only ask for cards you have!\n");
         continue;
       }
 
       if (opponentHand.toString().contains(bup.toUpperCase())) {
 
-        System.out.println("You ask for " + bup.toUpperCase() + "S, and he hands them over.");
+        view.display("You ask for " + bup.toUpperCase() + "S, and he hands them over.\n");
         takeStreak++;
         if (takeStreak >= 3) {
 
           susLevel++;
           if (susLevel >= 3 && !streakTextUsed) {
-            System.out.println("Your opponent seems suspicious of your guessing streak");
+            view.display("Your opponent seems suspicious of your guessing streak\n");
             streakTextUsed = true;
           }
         }
@@ -419,7 +419,7 @@ public class GoFish implements IController {
       }
 
       if (!opponentHand.toString().contains(bup.toUpperCase())) {
-        System.out.println("Go Fish!");
+        view.display("Go Fish!\n");
         takeStreak = 0;
         drawForPlayer();
         if (checkForPoint(opponentHand, Ranks.TWO)) {
@@ -506,14 +506,14 @@ public class GoFish implements IController {
         if (checkForWin(i)) {
           break;
         }
-        System.out.println(playerHand);
+        view.display(playerHand+"\n");
       }
       for (int j = 0; j < 13; ) {
         int randNum = rng.nextInt(opponentHand.size());
         String card = opponentHand.get(randNum).toString();
 
         if (playerHand.toString().contains(card)) {
-          System.out.println("Your opponent asks for " + card + "S, so you hand them over.");
+          view.display("Your opponent asks for " + card + "S, so you hand them over.\n");
           do {
             opponentHand.add(Ranks.valueOf(card));
             playerHand.remove(Ranks.valueOf(card));
@@ -565,15 +565,15 @@ public class GoFish implements IController {
           if (checkForWin(i)) {
             break;
           }
-          System.out.println(playerHand);
+          view.display(playerHand+"\n");
           continue;
         }
 
         if (!playerHand.toString().contains(card)) {
-          System.out.println(
+          view.display(
               "Your opponent asks for "
                   + card
-                  + "S, you say \"Go Fish!\", and he reaches to draw a card");
+                  + "S, you say \"Go Fish!\", and he reaches to draw a card\n");
           drawForOpponent();
           if (checkForPoint(opponentHand, Ranks.TWO)) {
             opponentPoints++;
@@ -623,8 +623,8 @@ public class GoFish implements IController {
       }
     }
 
-    System.out.println("You: " + playerPoints);
-    System.out.println("Them: " + opponentPoints);
+    view.display("You: " + playerPoints + "\n");
+    view.display("Them: " + opponentPoints + "\n");
   }
 
   public boolean checkForPoint(ArrayList<Ranks> person, Ranks rank) {
@@ -658,11 +658,11 @@ public class GoFish implements IController {
   public boolean checkForWin(int i) {
     boolean win = false;
     if (i == 13) {
-      System.out.println("GAME!");
+      view.display("GAME!\n");
       if (playerPoints > opponentPoints) {
-        System.out.println("YOU WIN!");
+        view.display("YOU WIN!\n");
       } else if (opponentPoints > playerPoints) {
-        System.out.println("YOU LOSE!");
+        view.display("YOU LOSE!\n");
       }
       win = true;
     }
@@ -671,7 +671,7 @@ public class GoFish implements IController {
 
   public void run() {
     boolean isInvalid = true;
-    System.out.println("Welcome to Go Fish!");
+    view.display("Welcome to Go Fish!\n");
     gameLogic();
 
     boolean gameRestart = view.promptForBoolean("Try Again?\nY/N");

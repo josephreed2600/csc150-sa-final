@@ -14,6 +14,15 @@ public class BoardState {
 		this.cols = cols;
 	}
 
+	public BoardState(int rows, int cols, CellState init) {
+		this(rows, cols);
+		for(int row = 0; row < rows; row++) {
+			for(int col = 0; col < cols; col++) {
+				state[row][col] = init;
+			}
+		}
+	}
+
 	public CellState[][] getState() { return state; }
 
 	public CellState getCell(int row, int col) { return state[row][col]; }

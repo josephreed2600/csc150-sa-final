@@ -1,7 +1,5 @@
 package gameoflife.models;
 
-
-
 public class BoardState {
   private CellState[][] state;
   public final int rows, cols;

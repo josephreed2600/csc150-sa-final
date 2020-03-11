@@ -1,22 +1,22 @@
 package gofish.controllers;
 
 import controllers.IController;
-import enums.Ranks;
+import gofish.models.Rank;
 import java.util.ArrayList;
 import java.util.Random;
 import views.IView;
 
 public class GoFish implements IController {
-  ArrayList<Ranks> deck = new ArrayList<>();
-  ArrayList<Ranks> playerHand = new ArrayList<>();
-  ArrayList<Ranks> opponentHand = new ArrayList<>();
-  ArrayList<Ranks> countHand = new ArrayList<>();
-  int playerPoints = 0;
-  int opponentPoints = 0;
-  int susLevel = 0;
-  int squashyCount = 0;
-  int takeStreak = 0;
-  static Random rng = new Random();
+  private ArrayList<Rank> deck = new ArrayList<>();
+  private ArrayList<Rank> playerHand = new ArrayList<>();
+  private ArrayList<Rank> opponentHand = new ArrayList<>();
+  private ArrayList<Rank> countHand = new ArrayList<>();
+  private int playerPoints = 0;
+  private int opponentPoints = 0;
+  private int susLevel = 0;
+  private int squashyCount = 0;
+  private int takeStreak = 0;
+  private static Random rng = new Random();
 
   private IView view;
 
@@ -24,24 +24,24 @@ public class GoFish implements IController {
     this.view = view;
   }
 
-  public void Initialize() {
-    deck.add(Ranks.ROUXLS_KAARD);
-    deck.add(Ranks.JOKER);
+  public void initialize() {
+    deck.add(Rank.ROUXLS_KAARD);
+    deck.add(Rank.JOKER);
 
     for (int i = 0; i < 4; i++) {
-      deck.add(Ranks.TWO);
-      deck.add(Ranks.THREE);
-      deck.add(Ranks.FOUR);
-      deck.add(Ranks.FIVE);
-      deck.add(Ranks.SIX);
-      deck.add(Ranks.SEVEN);
-      deck.add(Ranks.EIGHT);
-      deck.add(Ranks.NINE);
-      deck.add(Ranks.TEN);
-      deck.add(Ranks.JACK);
-      deck.add(Ranks.QUEEN);
-      deck.add(Ranks.KING);
-      deck.add(Ranks.ACE);
+      deck.add(Rank.TWO);
+      deck.add(Rank.THREE);
+      deck.add(Rank.FOUR);
+      deck.add(Rank.FIVE);
+      deck.add(Rank.SIX);
+      deck.add(Rank.SEVEN);
+      deck.add(Rank.EIGHT);
+      deck.add(Rank.NINE);
+      deck.add(Rank.TEN);
+      deck.add(Rank.JACK);
+      deck.add(Rank.QUEEN);
+      deck.add(Rank.KING);
+      deck.add(Rank.ACE);
     }
     for (int i = 0; i < 7; i++) {
       drawForPlayer();
@@ -87,7 +87,7 @@ public class GoFish implements IController {
 
   public void gameLogic() {
     int totalPoints = playerPoints + opponentPoints;
-    Initialize();
+    initialize();
     boolean streakTextUsed = false;
     for (int i = totalPoints; i < 13; ) {
       int failChance = rng.nextInt(10);
@@ -208,45 +208,45 @@ public class GoFish implements IController {
               "While your opponent is taking a bathroom break you take one of their cards.  it's a "
                   + card
                   + "!\n");
-          opponentHand.remove(Ranks.valueOf(card));
-          playerHand.add(Ranks.valueOf(card));
-          if (checkForPoint(playerHand, Ranks.TWO)) {
+          opponentHand.remove(Rank.valueOf(card));
+          playerHand.add(Rank.valueOf(card));
+          if (checkForPoint(playerHand, Rank.TWO)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.THREE)) {
+          } else if (checkForPoint(playerHand, Rank.THREE)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.FOUR)) {
+          } else if (checkForPoint(playerHand, Rank.FOUR)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.FIVE)) {
+          } else if (checkForPoint(playerHand, Rank.FIVE)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.SIX)) {
+          } else if (checkForPoint(playerHand, Rank.SIX)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.SEVEN)) {
+          } else if (checkForPoint(playerHand, Rank.SEVEN)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.EIGHT)) {
+          } else if (checkForPoint(playerHand, Rank.EIGHT)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.NINE)) {
+          } else if (checkForPoint(playerHand, Rank.NINE)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.TEN)) {
+          } else if (checkForPoint(playerHand, Rank.TEN)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.JACK)) {
+          } else if (checkForPoint(playerHand, Rank.JACK)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.QUEEN)) {
+          } else if (checkForPoint(playerHand, Rank.QUEEN)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.KING)) {
+          } else if (checkForPoint(playerHand, Rank.KING)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.ACE)) {
+          } else if (checkForPoint(playerHand, Rank.ACE)) {
             playerPoints++;
             i++;
           }
@@ -294,19 +294,19 @@ public class GoFish implements IController {
 
       if (!playerHand.toString().contains(bup.toUpperCase())
           || bup.isEmpty()
-          || !bup.toUpperCase().equals(Ranks.TWO.toString())
-              && !bup.toUpperCase().equals(Ranks.THREE.toString())
-              && !bup.toUpperCase().equals(Ranks.FOUR.toString())
-              && !bup.toUpperCase().equals(Ranks.FIVE.toString())
-              && !bup.toUpperCase().equals(Ranks.SIX.toString())
-              && !bup.toUpperCase().equals(Ranks.SEVEN.toString())
-              && !bup.toUpperCase().equals(Ranks.EIGHT.toString())
-              && !bup.toUpperCase().equals(Ranks.NINE.toString())
-              && !bup.toUpperCase().equals(Ranks.TEN.toString())
-              && !bup.toUpperCase().equals(Ranks.JACK.toString())
-              && !bup.toUpperCase().equals(Ranks.QUEEN.toString())
-              && !bup.toUpperCase().equals(Ranks.KING.toString())
-              && !bup.toUpperCase().equals(Ranks.ACE.toString())) {
+          || !bup.toUpperCase().equals(Rank.TWO.toString())
+              && !bup.toUpperCase().equals(Rank.THREE.toString())
+              && !bup.toUpperCase().equals(Rank.FOUR.toString())
+              && !bup.toUpperCase().equals(Rank.FIVE.toString())
+              && !bup.toUpperCase().equals(Rank.SIX.toString())
+              && !bup.toUpperCase().equals(Rank.SEVEN.toString())
+              && !bup.toUpperCase().equals(Rank.EIGHT.toString())
+              && !bup.toUpperCase().equals(Rank.NINE.toString())
+              && !bup.toUpperCase().equals(Rank.TEN.toString())
+              && !bup.toUpperCase().equals(Rank.JACK.toString())
+              && !bup.toUpperCase().equals(Rank.QUEEN.toString())
+              && !bup.toUpperCase().equals(Rank.KING.toString())
+              && !bup.toUpperCase().equals(Rank.ACE.toString())) {
         view.display("You can only ask for cards you have!\n");
         continue;
       }
@@ -328,89 +328,89 @@ public class GoFish implements IController {
           }
         }
         do {
-          playerHand.add(Ranks.valueOf(bup.toUpperCase()));
-          opponentHand.remove(Ranks.valueOf(bup.toUpperCase()));
+          playerHand.add(Rank.valueOf(bup.toUpperCase()));
+          opponentHand.remove(Rank.valueOf(bup.toUpperCase()));
           if (opponentHand.size() == 0) {
             drawForOpponent();
           }
-          if (checkForPoint(opponentHand, Ranks.TWO)) {
+          if (checkForPoint(opponentHand, Rank.TWO)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.THREE)) {
+          } else if (checkForPoint(opponentHand, Rank.THREE)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.FOUR)) {
+          } else if (checkForPoint(opponentHand, Rank.FOUR)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
+          } else if (checkForPoint(opponentHand, Rank.FIVE)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.SIX)) {
+          } else if (checkForPoint(opponentHand, Rank.SIX)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
+          } else if (checkForPoint(opponentHand, Rank.SEVEN)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
+          } else if (checkForPoint(opponentHand, Rank.EIGHT)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.NINE)) {
+          } else if (checkForPoint(opponentHand, Rank.NINE)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.TEN)) {
+          } else if (checkForPoint(opponentHand, Rank.TEN)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.JACK)) {
+          } else if (checkForPoint(opponentHand, Rank.JACK)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
+          } else if (checkForPoint(opponentHand, Rank.QUEEN)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.KING)) {
+          } else if (checkForPoint(opponentHand, Rank.KING)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.ACE)) {
+          } else if (checkForPoint(opponentHand, Rank.ACE)) {
             opponentPoints++;
             i++;
           }
 
-          if (checkForPoint(playerHand, Ranks.TWO)) {
+          if (checkForPoint(playerHand, Rank.TWO)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.THREE)) {
+          } else if (checkForPoint(playerHand, Rank.THREE)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.FOUR)) {
+          } else if (checkForPoint(playerHand, Rank.FOUR)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.FIVE)) {
+          } else if (checkForPoint(playerHand, Rank.FIVE)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.SIX)) {
+          } else if (checkForPoint(playerHand, Rank.SIX)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.SEVEN)) {
+          } else if (checkForPoint(playerHand, Rank.SEVEN)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.EIGHT)) {
+          } else if (checkForPoint(playerHand, Rank.EIGHT)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.NINE)) {
+          } else if (checkForPoint(playerHand, Rank.NINE)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.TEN)) {
+          } else if (checkForPoint(playerHand, Rank.TEN)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.JACK)) {
+          } else if (checkForPoint(playerHand, Rank.JACK)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.QUEEN)) {
+          } else if (checkForPoint(playerHand, Rank.QUEEN)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.KING)) {
+          } else if (checkForPoint(playerHand, Rank.KING)) {
             playerPoints++;
             i++;
-          } else if (checkForPoint(playerHand, Ranks.ACE)) {
+          } else if (checkForPoint(playerHand, Rank.ACE)) {
             playerPoints++;
             i++;
           }
@@ -426,84 +426,84 @@ public class GoFish implements IController {
         view.display("Go Fish!\n\n");
         takeStreak = 0;
         drawForPlayer();
-        if (checkForPoint(opponentHand, Ranks.TWO)) {
+        if (checkForPoint(opponentHand, Rank.TWO)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.THREE)) {
+        } else if (checkForPoint(opponentHand, Rank.THREE)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.FOUR)) {
+        } else if (checkForPoint(opponentHand, Rank.FOUR)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
+        } else if (checkForPoint(opponentHand, Rank.FIVE)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.SIX)) {
+        } else if (checkForPoint(opponentHand, Rank.SIX)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
+        } else if (checkForPoint(opponentHand, Rank.SEVEN)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
+        } else if (checkForPoint(opponentHand, Rank.EIGHT)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.NINE)) {
+        } else if (checkForPoint(opponentHand, Rank.NINE)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.TEN)) {
+        } else if (checkForPoint(opponentHand, Rank.TEN)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.JACK)) {
+        } else if (checkForPoint(opponentHand, Rank.JACK)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
+        } else if (checkForPoint(opponentHand, Rank.QUEEN)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.KING)) {
+        } else if (checkForPoint(opponentHand, Rank.KING)) {
           opponentPoints++;
           i++;
-        } else if (checkForPoint(opponentHand, Ranks.ACE)) {
+        } else if (checkForPoint(opponentHand, Rank.ACE)) {
           opponentPoints++;
           i++;
         }
 
-        if (checkForPoint(playerHand, Ranks.TWO)) {
+        if (checkForPoint(playerHand, Rank.TWO)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.THREE)) {
+        } else if (checkForPoint(playerHand, Rank.THREE)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.FOUR)) {
+        } else if (checkForPoint(playerHand, Rank.FOUR)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.FIVE)) {
+        } else if (checkForPoint(playerHand, Rank.FIVE)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.SIX)) {
+        } else if (checkForPoint(playerHand, Rank.SIX)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.SEVEN)) {
+        } else if (checkForPoint(playerHand, Rank.SEVEN)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.EIGHT)) {
+        } else if (checkForPoint(playerHand, Rank.EIGHT)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.NINE)) {
+        } else if (checkForPoint(playerHand, Rank.NINE)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.TEN)) {
+        } else if (checkForPoint(playerHand, Rank.TEN)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.JACK)) {
+        } else if (checkForPoint(playerHand, Rank.JACK)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.QUEEN)) {
+        } else if (checkForPoint(playerHand, Rank.QUEEN)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.KING)) {
+        } else if (checkForPoint(playerHand, Rank.KING)) {
           playerPoints++;
           i++;
-        } else if (checkForPoint(playerHand, Ranks.ACE)) {
+        } else if (checkForPoint(playerHand, Rank.ACE)) {
           playerPoints++;
           i++;
         }
@@ -523,48 +523,48 @@ public class GoFish implements IController {
                   + (card.toLowerCase().equals("six") ? "e" : "")
                   + "s, so you hand them over.\n");
           do {
-            opponentHand.add(Ranks.valueOf(card));
-            playerHand.remove(Ranks.valueOf(card));
+            opponentHand.add(Rank.valueOf(card));
+            playerHand.remove(Rank.valueOf(card));
             if (playerHand.size() == 0) {
               drawForPlayer();
             }
-            if (checkForPoint(opponentHand, Ranks.TWO)) {
+            if (checkForPoint(opponentHand, Rank.TWO)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.THREE)) {
+            } else if (checkForPoint(opponentHand, Rank.THREE)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.FOUR)) {
+            } else if (checkForPoint(opponentHand, Rank.FOUR)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
+            } else if (checkForPoint(opponentHand, Rank.FIVE)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.SIX)) {
+            } else if (checkForPoint(opponentHand, Rank.SIX)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
+            } else if (checkForPoint(opponentHand, Rank.SEVEN)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
+            } else if (checkForPoint(opponentHand, Rank.EIGHT)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.NINE)) {
+            } else if (checkForPoint(opponentHand, Rank.NINE)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.TEN)) {
+            } else if (checkForPoint(opponentHand, Rank.TEN)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.JACK)) {
+            } else if (checkForPoint(opponentHand, Rank.JACK)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
+            } else if (checkForPoint(opponentHand, Rank.QUEEN)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.KING)) {
+            } else if (checkForPoint(opponentHand, Rank.KING)) {
               opponentPoints++;
               i++;
-            } else if (checkForPoint(opponentHand, Ranks.ACE)) {
+            } else if (checkForPoint(opponentHand, Rank.ACE)) {
               opponentPoints++;
               i++;
             }
@@ -584,43 +584,43 @@ public class GoFish implements IController {
                   + (card.toLowerCase().equals("six") ? "e" : "")
                   + "s, you say \"Go Fish!\", and he reaches to draw a card.\n");
           drawForOpponent();
-          if (checkForPoint(opponentHand, Ranks.TWO)) {
+          if (checkForPoint(opponentHand, Rank.TWO)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.THREE)) {
+          } else if (checkForPoint(opponentHand, Rank.THREE)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.FOUR)) {
+          } else if (checkForPoint(opponentHand, Rank.FOUR)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.FIVE)) {
+          } else if (checkForPoint(opponentHand, Rank.FIVE)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.SIX)) {
+          } else if (checkForPoint(opponentHand, Rank.SIX)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.SEVEN)) {
+          } else if (checkForPoint(opponentHand, Rank.SEVEN)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.EIGHT)) {
+          } else if (checkForPoint(opponentHand, Rank.EIGHT)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.NINE)) {
+          } else if (checkForPoint(opponentHand, Rank.NINE)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.TEN)) {
+          } else if (checkForPoint(opponentHand, Rank.TEN)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.JACK)) {
+          } else if (checkForPoint(opponentHand, Rank.JACK)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.QUEEN)) {
+          } else if (checkForPoint(opponentHand, Rank.QUEEN)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.KING)) {
+          } else if (checkForPoint(opponentHand, Rank.KING)) {
             opponentPoints++;
             i++;
-          } else if (checkForPoint(opponentHand, Ranks.ACE)) {
+          } else if (checkForPoint(opponentHand, Rank.ACE)) {
             opponentPoints++;
             i++;
           }
@@ -636,7 +636,7 @@ public class GoFish implements IController {
     view.display("Them: " + opponentPoints + " points\n");
   }
 
-  public boolean checkForPoint(ArrayList<Ranks> person, Ranks rank) {
+  public boolean checkForPoint(ArrayList<Rank> person, Rank rank) {
     boolean success = false;
     int i = 0;
 

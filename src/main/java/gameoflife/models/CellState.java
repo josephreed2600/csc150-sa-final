@@ -9,11 +9,6 @@ public class CellState {
     this.color = color;
   }
 
-  public CellState(CellState cs) {
-    this.name = cs.name;
-    this.color = cs.color;
-  }
-
   // TODO if this needs to change, change it
   public String toString() {
     return name;

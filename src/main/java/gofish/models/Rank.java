@@ -1,6 +1,6 @@
-package enums;
+package gofish.models;
 
-public enum Ranks {
+public enum Rank {
   TWO,
   THREE,
   FOUR,

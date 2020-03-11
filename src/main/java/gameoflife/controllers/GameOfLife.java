@@ -102,7 +102,7 @@ public class GameOfLife {
   }
 
   public void applyTestPattern() {
-    String initial = "glider";
+    String initial = "glider gun";
     switch (initial) {
       case "glider":
         // Glider bearing SE
@@ -127,6 +127,21 @@ public class GameOfLife {
         currentState.setCell(2, 0, cellStates.findByName("dead"));
         currentState.setCell(2, 1, cellStates.findByName("dead"));
         currentState.setCell(2, 2, cellStates.findByName("dead"));
+        break;
+      case "glider gun":
+        int[] xs = {
+          25, 23, 25, 13, 14, 21, 22, 35, 36, 12, 16, 21, 22, 35, 36, 1, 2, 11, 17, 21, 22, 1, 2,
+          11, 15, 17, 18, 23, 25, 11, 17, 25, 12, 16, 13, 14
+        };
+        int[] ys = {
+          1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7,
+          7, 7, 8, 8, 9, 9
+        };
+        if (xs.length != ys.length)
+          throw new RuntimeException(
+              "Initial state has coords that don't pair up: array length mismatch");
+        for (int i = 0; i < xs.length; i++)
+          currentState.setCell(ys[i], xs[i], cellStates.findByName("alive"));
         break;
       default:
         break;

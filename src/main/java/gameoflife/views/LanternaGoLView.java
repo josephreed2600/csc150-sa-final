@@ -74,7 +74,7 @@ public class LanternaGoLView implements IGoLView {
 
   public int getWidth() {
     try {
-      return term.getTerminalSize().getColumns()/2;
+      return term.getTerminalSize().getColumns() / 2;
     } catch (IOException ioe) {
       throw new RuntimeException(ioe);
     }
@@ -92,12 +92,12 @@ public class LanternaGoLView implements IGoLView {
     try {
       for (int row = 0; row < boardState.rows; row++) {
         for (int col = 0; col < boardState.cols; col++) {
-					for (int subcell = 0; subcell < 2; subcell++) {
-						term.setCursorPosition(2*col+subcell, row);
-						TextColor color = TextColor.Factory.fromString(boardState.getCell(row, col).color.hex);
-						term.setBackgroundColor(color);
-						term.putCharacter(' ');
-					}
+          for (int subcell = 0; subcell < 2; subcell++) {
+            term.setCursorPosition(2 * col + subcell, row);
+            TextColor color = TextColor.Factory.fromString(boardState.getCell(row, col).color.hex);
+            term.setBackgroundColor(color);
+            term.putCharacter(' ');
+          }
         }
       }
       term.flush();

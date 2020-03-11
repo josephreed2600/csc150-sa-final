@@ -62,36 +62,6 @@ public class GameOfLife {
               System.out.print("]\n");
               return cell;
             });
-    /*
-    	 rules.add(new Rule("birth", (cell, neighbors) -> {
-    // if it's not dead, we don't care
-    if(!cell.equals(cellStates.findByName("dead"))) return cell;
-    int livingNeighbors = Rule.countState(neighbors, cellStates.findByName("alive"));
-    // if it has three live neighbors, be alive
-    if(livingNeighbors == 3) return cellStates.findByName("alive");
-    // otherwise, no change
-    return cell;
-    }));
-    rules.add(new Rule("overpopulation", (cell, neighbors) -> {
-    // if it's not alive, we don't care
-    if(!cell.equals(cellStates.findByName("alive"))) return cell;
-    int livingNeighbors = Rule.countState(neighbors, cellStates.findByName("alive"));
-    // if it has more than three live neighbors, then perish
-    if(livingNeighbors > 3) return cellStates.findByName("dead");
-    // otherwise, no change
-    return cell;
-    }));
-    rules.add(new Rule("loneliness", (cell, neighbors) -> {
-    // if it's not alive, we don't care
-    if(!cell.equals(cellStates.findByName("alive"))) return cell;
-    int livingNeighbors = Rule.countState(neighbors, cellStates.findByName("alive"));
-    // if it has more than three live neighbors, then perish
-    if(livingNeighbors < 2) return cellStates.findByName("dead");
-    // otherwise, no change
-    return cell;
-    }));
-     */
-    /**/
     Rule classicRule =
         new Rule(
             "classic",
@@ -132,27 +102,50 @@ public class GameOfLife {
   }
 
   public void applyTestPattern() {
-    /**/
-    currentState.setCell(0, 0, cellStates.findByName("dead"));
-    currentState.setCell(0, 1, cellStates.findByName("alive"));
-    currentState.setCell(0, 2, cellStates.findByName("dead"));
-    currentState.setCell(1, 0, cellStates.findByName("dead"));
-    currentState.setCell(1, 1, cellStates.findByName("dead"));
-    currentState.setCell(1, 2, cellStates.findByName("alive"));
-    currentState.setCell(2, 0, cellStates.findByName("alive"));
-    currentState.setCell(2, 1, cellStates.findByName("alive"));
-    currentState.setCell(2, 2, cellStates.findByName("alive"));
-    /*/
-    	currentState.setCell(0, 0, cellStates.findByName("dead"));
-    	currentState.setCell(0, 1, cellStates.findByName("dead"));
-    	currentState.setCell(0, 2, cellStates.findByName("dead"));
-    	currentState.setCell(1, 0, cellStates.findByName("alive"));
-    	currentState.setCell(1, 1, cellStates.findByName("alive"));
-    	currentState.setCell(1, 2, cellStates.findByName("alive"));
-    	currentState.setCell(2, 0, cellStates.findByName("dead"));
-    	currentState.setCell(2, 1, cellStates.findByName("dead"));
-    	currentState.setCell(2, 2, cellStates.findByName("dead"));
-    /**/
+    String initial = "glider gun";
+    switch (initial) {
+      case "glider":
+        // Glider bearing SE
+        currentState.setCell(0, 0, cellStates.findByName("dead"));
+        currentState.setCell(0, 1, cellStates.findByName("alive"));
+        currentState.setCell(0, 2, cellStates.findByName("dead"));
+        currentState.setCell(1, 0, cellStates.findByName("dead"));
+        currentState.setCell(1, 1, cellStates.findByName("dead"));
+        currentState.setCell(1, 2, cellStates.findByName("alive"));
+        currentState.setCell(2, 0, cellStates.findByName("alive"));
+        currentState.setCell(2, 1, cellStates.findByName("alive"));
+        currentState.setCell(2, 2, cellStates.findByName("alive"));
+        break;
+      case "log":
+        // 1x3
+        currentState.setCell(0, 0, cellStates.findByName("dead"));
+        currentState.setCell(0, 1, cellStates.findByName("dead"));
+        currentState.setCell(0, 2, cellStates.findByName("dead"));
+        currentState.setCell(1, 0, cellStates.findByName("alive"));
+        currentState.setCell(1, 1, cellStates.findByName("alive"));
+        currentState.setCell(1, 2, cellStates.findByName("alive"));
+        currentState.setCell(2, 0, cellStates.findByName("dead"));
+        currentState.setCell(2, 1, cellStates.findByName("dead"));
+        currentState.setCell(2, 2, cellStates.findByName("dead"));
+        break;
+      case "glider gun":
+        int[] xs = {
+          25, 23, 25, 13, 14, 21, 22, 35, 36, 12, 16, 21, 22, 35, 36, 1, 2, 11, 17, 21, 22, 1, 2,
+          11, 15, 17, 18, 23, 25, 11, 17, 25, 12, 16, 13, 14
+        };
+        int[] ys = {
+          1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7,
+          7, 7, 8, 8, 9, 9
+        };
+        if (xs.length != ys.length)
+          throw new RuntimeException(
+              "Initial state has coords that don't pair up: array length mismatch");
+        for (int i = 0; i < xs.length; i++)
+          currentState.setCell(ys[i], xs[i], cellStates.findByName("alive"));
+        break;
+      default:
+        break;
+    }
   }
 
   public void run() {

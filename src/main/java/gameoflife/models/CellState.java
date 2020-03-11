@@ -1,6 +1,5 @@
 package gameoflife.models;
 
-
 public class CellState {
   public final String name;
   public final CellColor color;

@@ -2,8 +2,6 @@ package gofish.controllers;
 
 import controllers.IController;
 import enums.Ranks;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Random;
 import views.IView;
@@ -28,9 +26,9 @@ public class GoFish implements IController {
 
   public void Initialize() {
     deck.add(Ranks.ROUXLS_KAARD);
+    deck.add(Ranks.JOKER);
 
     for (int i = 0; i < 4; i++) {
-      deck.add(Ranks.JOKER);
       deck.add(Ranks.TWO);
       deck.add(Ranks.THREE);
       deck.add(Ranks.FOUR);
@@ -97,19 +95,21 @@ public class GoFish implements IController {
           "\nDeck: "
               + (deck.size() - 2)
               + " cards left\nYou:  "
-              + playerPoints + " points"
+              + playerPoints
+              + " points"
               + "\nThem: "
-              + opponentPoints + " points"
-							+ "\n");
+              + opponentPoints
+              + " points"
+              + "\n");
       if (squashyCount == 1) {
         view.display("Praise be unto him.\n");
         view.display("His hand:\n" + opponentHand + "\n");
-				view.display("Your hand:\n");
-			}
-			view.display(playerHand+"\n");
+        view.display("Your hand:\n");
+      }
+      view.display(playerHand + "\n");
 
       String bup = view.promptForString("Please ask for a card.\n> ");
-			view.display("\n");
+      view.display("\n");
 
       if (bup.equals("SQUASHY")) {
         view.display("You tell your opponent there is something really cool behind him.\n");
@@ -176,8 +176,7 @@ public class GoFish implements IController {
           view.display("While your opponent isn't looking, you take another card.\n");
           drawForPlayer();
           if (susLevel == 3) {
-            view.display(
-                "You're starting to look pretty sus, might not want to try that again.\n");
+            view.display("You're starting to look pretty sus, might not want to try that again.\n");
           }
           continue;
         }
@@ -255,8 +254,7 @@ public class GoFish implements IController {
             break;
           }
           if (susLevel == 3) {
-            view.display(
-                "You're starting to look pretty sus, might not want to try that again.\n");
+            view.display("You're starting to look pretty sus, might not want to try that again.\n");
           }
           continue;
         }
@@ -288,8 +286,7 @@ public class GoFish implements IController {
             view.display("There does not seem to be any of those in your opponent's hand\n");
           }
           if (susLevel == 3) {
-            view.display(
-                "You're starting to look pretty sus, might not want to try that again.\n");
+            view.display("You're starting to look pretty sus, might not want to try that again.\n");
           }
           continue;
         }
@@ -316,7 +313,11 @@ public class GoFish implements IController {
 
       if (opponentHand.toString().contains(bup.toUpperCase())) {
 
-        view.display("You ask for " + bup.toLowerCase() + (bup.toLowerCase().equals("six")?"e":"") + "s, and he hands them over.\n");
+        view.display(
+            "You ask for "
+                + bup.toLowerCase()
+                + (bup.toLowerCase().equals("six") ? "e" : "")
+                + "s, and he hands them over.\n");
         takeStreak++;
         if (takeStreak >= 3) {
 
@@ -509,14 +510,18 @@ public class GoFish implements IController {
         if (checkForWin(i)) {
           break;
         }
-        //view.display(playerHand+"\n");
+        // view.display(playerHand+"\n");
       }
       for (int j = 0; j < 13; ) {
         int randNum = rng.nextInt(opponentHand.size());
         String card = opponentHand.get(randNum).toString();
 
         if (playerHand.toString().contains(card)) {
-          view.display("Your opponent asks for " + card.toString().toLowerCase() + (card.toLowerCase().equals("six")?"e":"") + "s, so you hand them over.\n");
+          view.display(
+              "Your opponent asks for "
+                  + card.toString().toLowerCase()
+                  + (card.toLowerCase().equals("six") ? "e" : "")
+                  + "s, so you hand them over.\n");
           do {
             opponentHand.add(Ranks.valueOf(card));
             playerHand.remove(Ranks.valueOf(card));
@@ -568,7 +573,7 @@ public class GoFish implements IController {
           if (checkForWin(i)) {
             break;
           }
-          view.display(playerHand+"\n");
+          view.display(playerHand + "\n");
           continue;
         }
 
@@ -576,7 +581,7 @@ public class GoFish implements IController {
           view.display(
               "Your opponent asks for "
                   + card.toString().toLowerCase()
-                  + (card.toLowerCase().equals("six")?"e":"")
+                  + (card.toLowerCase().equals("six") ? "e" : "")
                   + "s, you say \"Go Fish!\", and he reaches to draw a card.\n");
           drawForOpponent();
           if (checkForPoint(opponentHand, Ranks.TWO)) {
